@@ -119,21 +119,30 @@ function showDetectedBadge(lang) {
  * until one succeeds.
  */
 async function callTranslateApi(text, source, target) {
-    const response = await fetch(
-        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${source}|${target}`
-    );
 
-    if (!response.ok) {
+    const response = await fetch("/translate", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            text,
+            source,
+            target
+        })
+
+    });
+
+    if (!response.ok)
         throw new Error("Translation failed");
-    }
 
     const data = await response.json();
 
-    if (!data.responseData || !data.responseData.translatedText) {
-        throw new Error("Invalid API response");
-    }
+    return data.translation;
 
-    return data.responseData.translatedText;
 }
 
 async function handleTranslate() {
