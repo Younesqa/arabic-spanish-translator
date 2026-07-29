@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <title>Traductor Árabe ⇄ Español</title>
+  <meta name="description" content="Traductor instantáneo entre árabe y español · مترجم فوري بين العربية والإسبانية" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0A84FF" />
+
+  <!-- iOS Add to Home Screen support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AR⇄ES" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <link rel="icon" href="icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8h9M8 5v3c0 5-1.5 8-5 10M9 8c0 5.5 3 8.5 8 11" />
+          <path d="M14 15l3-9 3 9M15.3 12h3.4" />
+        </svg>
+      </div>
+      <h1>Traductor <span class="dot">·</span> مترجم</h1>
+      <p class="subtitle">Español ⇄ العربية</p>
+      <button id="themeToggle">🌙 Dark Mode</button>
+    </header>
+
+    <!-- Main card -->
+    <main class="translator-card">
+
+      <!-- Input panel -->
+      <section class="text-panel">
+        <div class="panel-header">
+          <span class="panel-label" id="inputLabel">Escribe o pega tu texto · اكتب النص</span>
+          <span class="char-counter" id="charCounter">0</span>
+          
+        </div>
+
+        <textarea
+          id="inputText"
+          class="text-area"
+          placeholder="Escribe en español o árabe… / اكتب بالإسبانية أو العربية…"
+          enterkeyhint="go"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+        ></textarea>
+
+        <div class="panel-toolbar">
+          <button class="icon-btn" id="pasteBtn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/></svg>
+            <span>Pegar</span>
+          </button>
+          <button class="icon-btn" id="clearInputBtn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            <span>Borrar</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Action row -->
+      <div class="action-row">
+        <button class="translate-btn" id="translateBtn" type="button">
+          <span class="btn-label">Traducir</span>
+          <span class="spinner" id="spinner" hidden></span>
+        </button>
+
+        <button class="swap-btn" id="swapBtn" type="button" title="Usar traducción como nuevo texto" aria-label="Intercambiar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3v12M17 15l4-4M17 15l-4-4"/><path d="M7 21V9M7 9 3 13M7 9l4 4"/></svg>
+        </button>
+      </div>
+
+      <!-- Error banner -->
+      <div class="error-banner" id="errorBanner" role="alert" hidden></div>
+
+      <!-- Output panel -->
+      <section class="text-panel">
+        <div class="panel-header">
+          <span class="panel-label" id="outputLabel">Traducción · الترجمة</span>
+          <span class="detected-badge" id="detectedBadge" hidden></span>
+        </div>
+
+        <textarea
+          id="outputText"
+          class="text-area"
+          placeholder="Aquí aparecerá tu traducción… / ستظهر الترجمة هنا…"
+          readonly
+        ></textarea>
+
+        <div class="panel-toolbar">
+          <button class="icon-btn" id="copyBtn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copiar</span>
+          </button>
+          <button class="icon-btn" id="clearOutputBtn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            <span>Borrar</span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="hint">⌘ / Ctrl + Enter para traducir rápido</footer>
+
+    <!-- Toast for copy confirmation -->
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

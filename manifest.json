@@ -1,0 +1,27 @@
+{
+  "name": "Traductor Árabe ⇄ Español",
+  "short_name": "AR⇄ES",
+  "description": "Traductor instantáneo entre árabe y español · مترجم فوري بين العربية والإسبانية",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F2F7",
+  "theme_color": "#0A84FF",
+  "lang": "es",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
